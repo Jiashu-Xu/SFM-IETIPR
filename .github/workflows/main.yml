@@ -20,7 +20,7 @@ jobs:
           image: 18810919727/latex_diff:v1
           options: -v ${{ github.workspace }}:/dir:rw
           run: |
-            latexdiff /dir/wileyNJDv5_AMA_old.tex /dir/wileyNJDv5_AMA_new.tex > /dir/diff.tex # 此处可以按需替换 old.tex、new.tex
+            latexdiff --append-textcmd=abstract --append-textcmd=keywords /dir/wileyNJDv5_AMA_old.tex /dir/wileyNJDv5_AMA_new.tex > /dir/diff.tex # 此处可以按需替换 old.tex、new.tex
             echo "Generating diff.tex successfully"
       - name: git add & commit
         run: |
