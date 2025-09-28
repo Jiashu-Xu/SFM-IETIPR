@@ -1,7 +1,7 @@
 \documentclass[AMA,Times1COL]{WileyNJDv5} %STIX1COL,STIX2COL,STIXSMALL
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL /dir/wileyNJDv5_AMA_old.tex   Sun Sep 28 15:07:40 2025
-%DIF ADD /dir/wileyNJDv5_AMA_new.tex   Sun Sep 28 15:07:40 2025
+%DIF DEL /dir/wileyNJDv5_AMA_old.tex   Sun Sep 28 15:22:50 2025
+%DIF ADD /dir/wileyNJDv5_AMA_new.tex   Sun Sep 28 15:22:50 2025
 
 
 \articletype{Original Research}%
@@ -74,15 +74,9 @@
 %\fundingInfo{Text}
 %\JELinfo{ejlje}
 
-\DIFdelbegin %DIFDELCMD < \abstract[Abstract]{The analysis of posterior scleral images is crucial for understanding the progression of myopia and developing effective interventions. However, due to the subtle edge variations in posterior scleral images and their high memory requirements, existing 3D models face limitations in memory consumption, while 2D models struggle to capture cross-slice spatial information, making it difficult to balance performance and memory usage. Therefore, we propose SFM-Unet, a novel model designed specifically for OCT analysis of the posterior sclera. SFM-Unet integrates frequency and spatial information through a Cross-Slice Spatial-Frequency Memory module, effectively capturing the complex spatial relationships in 3D images. We conducted experiments on a private dataset EyePS2024 and the publicly available BraTS2020 dataset, where SFM-Unet demonstrated competitive performance across all datasets, underscoring its effectiveness and practicality in posterior sclera OCT analysis.}
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \abstract[Abstract]{The analysis of posterior scleral images is crucial for understanding the progression of myopia and developing effective interventions. However, due to the subtle edge variations in posterior scleral images and their high memory requirements, existing 3D models face limitations in memory consumption, while 2D models struggle to capture cross-slice spatial information, making it difficult to balance performance and memory usage. Therefore, we propose SFM-Unet, a novel model designed specifically for OCT analysis of the posterior sclera. SFM-Unet integrates frequency and spatial information through a Cross-Slice Spatial-Frequency Memory module, effectively capturing the complex spatial relationships in 3D images. We conducted experiments on a private dataset EyePS2024 and the publicly available BraTS2020 dataset, where SFM-Unet demonstrated competitive performance across all datasets, demonstrating its effectiveness and practicality in posterior sclera OCT analysis.} 
-\DIFaddend 
+\abstract[Abstract]{The analysis of posterior scleral images is crucial for understanding the progression of myopia and developing effective interventions. However, due to the subtle edge variations in posterior scleral images and their high memory requirements, existing 3D models face limitations in memory consumption, while 2D models struggle to capture cross-slice spatial information, making it difficult to balance performance and memory usage. Therefore, we propose SFM-Unet, a novel model designed specifically for OCT analysis of the posterior sclera. SFM-Unet integrates frequency and spatial information through a Cross-Slice Spatial-Frequency Memory module, effectively capturing the complex spatial relationships in 3D images. We conducted experiments on a private dataset EyePS2024 and the publicly available BraTS2020 dataset, where SFM-Unet demonstrated competitive performance across all datasets, \DIFdelbegin \DIFdel{underscoring }\DIFdelend \DIFaddbegin \DIFadd{demonstrating }\DIFaddend its effectiveness and practicality in posterior sclera OCT analysis.} 
 
-\DIFdelbegin %DIFDELCMD < \keywords{OCT, Medical iamge analysis, Frequency, Sclera}
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \keywords{OCT, Medical image analysis, Frequency, Sclera} 
-\DIFaddend 
+\keywords{OCT, Medical \DIFdelbegin \DIFdel{iamge }\DIFdelend \DIFaddbegin \DIFadd{image }\DIFaddend analysis, Frequency, Sclera} %DIF > 
 
 \maketitle
 
