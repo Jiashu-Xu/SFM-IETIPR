@@ -1,7 +1,7 @@
 \documentclass[AMA,Times1COL]{WileyNJDv5} %STIX1COL,STIX2COL,STIXSMALL
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL /dir/wileyNJDv5_AMA_old.tex   Sun Sep 28 15:22:50 2025
-%DIF ADD /dir/wileyNJDv5_AMA_new.tex   Sun Sep 28 15:22:50 2025
+%DIF DEL /dir/wileyNJDv5_AMA_old.tex   Mon Sep 29 10:32:23 2025
+%DIF ADD /dir/wileyNJDv5_AMA_new.tex   Mon Sep 29 10:32:23 2025
 
 
 \articletype{Original Research}%
@@ -17,7 +17,7 @@
 \raggedbottom
 %DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
 %DIF UNDERLINE PREAMBLE %DIF PREAMBLE
-%\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
 \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
 \providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
 \providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
@@ -176,7 +176,7 @@ The forward representation \( C_s \) for the current slice is then propagated to
 Subsequently, the features are recovered as high-resolution segmentation maps by a decoder, while maintaining crucial spatial data and temporal consistency. 
 
 \subsection{Loss function}
-We employ the Diceloss and Cross-entropy loss function, which are the most elementary in medical image analysis. We then combine these two elements. By calculating the loss at the batch level, we have devised a loss function that can mitigate the fluctuations in loss observed for individual samples, which may be attributable to random noise or misclassification of minor structures. This enables the model to converge in a more stable manner. Furthermore, it can enhance the overall segmentation performance, particularly in scenarios where data distribution is uneven, and facilitate more accurate weighting of different samples. The specific loss function is presented in \eqref{equ:loss}. $\alpha$ refer to the weights of loss functions, which is set to $0.5$ by default.
+We employ the Diceloss and Cross-entropy loss function, which are the most elementary in medical image analysis. We then combine these two elements. By calculating the loss at the batch level, we have devised a loss function that can mitigate the fluctuations in loss observed for individual samples, which may be attributable to random noise or misclassification of minor structures. This enables the model to converge in a more stable manner. Furthermore, it can enhance the overall segmentation performance, particularly in scenarios where data distribution is uneven, and facilitate more accurate weighting of different samples. The specific loss function is presented in \eqref{equ:loss}. $\alpha$ \DIFdelbegin \DIFdel{refer to the weights of loss functions}\DIFdelend \DIFaddbegin \DIFadd{refers to the weight assigned to each loss component}\DIFaddend , which is set to $0.5$ by default.
 
 \begin{equation}
 \label{equ:loss}
@@ -191,7 +191,7 @@ We employ the Diceloss and Cross-entropy loss function, which are the most eleme
 
 \section{Experiment}
 \subsection{Datasets}
-\textbf{EyePS2024}: We utilized the EyePS2024 dataset, a private dataset of posterior sclera mechanics under mechanical loading. The dataset comprises 192 labeled cases, each of which consists of a baseline image and a mechanical loading image. Both the baseline and mechanical loading images are 3D OCT scans in DICOM format. Each case contains a displacement field as a label, which characterizes the posterior scleral biomechanical compliance as either high or low, which can be an important predictor of myopia progression.
+\textbf{EyePS2024}: We utilized the EyePS2024 dataset, a private dataset of posterior sclera mechanics under mechanical loading. The dataset comprises 192 labeled cases, each of which consists of a baseline image and a mechanical loading image\DIFaddbegin \DIFadd{, with a volume size of 512 × 512 × 920 voxels}\DIFaddend . Both the baseline and mechanical loading images are 3D OCT scans in DICOM format. Each case contains a displacement field as a label, which \DIFaddbegin \DIFadd{is obtained through non-rigid image registration between the baseline and mechanical loading images, and manually validated by ophthalmologists. This displacement field }\DIFaddend characterizes the posterior scleral biomechanical compliance as either high or low, \DIFdelbegin \DIFdel{which can be }\DIFdelend \DIFaddbegin \DIFadd{serving as }\DIFaddend an important predictor of myopia progression.
 
 \textbf{Brats2020}: We utilized BraTS2020 dataset\cite{menze2014multimodal-brats1}\cite{bakas2017advancing-brats2}, which is a publicly available, large-scale brain multimodal MRI glioma segmentation dataset. The dataset includes 369 labeled training cases and 125 unlabeled validation cases. Each training case comprises 3D images of four modalities and one unified label. The annotations include GD-enhancing tumor, peritumoral edematous, and necrotic tumor core.
 
@@ -207,7 +207,10 @@ For the EyePS2024 dataset, following established protocol in ophthalmic image an
 
 where $y_i$ denotes the ground-truth value, $\hat{y}_i$ represents the predicted value, and N is the total number of pixels/voxels. MSE quantifies the overall magnitude of prediction errors with quadratic weighting, particularly sensitive to large deviations, while MAE provides a robust linear measure of absolute pixel-wise discrepancies, ensuring balanced evaluation across heterogeneous anatomical structures.
 
-For the BraTS2020 dataset, consistent with brain tumor segmentation benchmarks\cite{menze2014multimodal,chen2024adaptive}, we employed the Dice coefficient (Dice) and 95\% Hausdorff Distance (HD95) as major metrics to evaluate the segmentation accuracy, which are written as:
+\DIFaddbegin \DIFadd{Clinically, lower MSE/MAE values indicate more accurate modeling of posterior scleral deformations. A key manifestation of pathological myopia is abnormal axial elongation. The risk of pathological axial growth may be associated with the biomechanical properties of the posterior sclera. Therefore, the biomechanical properties of the posterior sclera and their patterns of change may serve as indicators for predicting myopia progression and indicating early pathological changes in myopia.
+}
+
+\DIFaddend For the BraTS2020 dataset, consistent with brain tumor segmentation benchmarks\cite{menze2014multimodal,chen2024adaptive}, we employed the Dice coefficient (Dice) and 95\% Hausdorff Distance (HD95) as major metrics to evaluate the segmentation accuracy, which are written as:
 \begin{equation}
     \mathrm{Dice}=\frac{2\times|A\cap B|}{|A|+|B|}
 \end{equation}
@@ -238,7 +241,7 @@ In terms of parameter efficiency, SFM-Unet demonstrates a significant advantage.
 \begin{table}[htbp]
 \scriptsize
 \centering
-\caption{Comparison with state-of-the-art models on EyePS2024.(\textbf{Bold} indicates the best.)}
+\caption{Comparison with state-of-the-art models on EyePS2024.(\textbf{Bold} indicates the best \DIFaddbeginFL \DIFaddFL{results}\DIFaddendFL .)}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Model} & \textbf{Venue} & \textbf{MAE$\downarrow$} & \textbf{MSE$\downarrow$}  & \textbf{Parameters(M)$\downarrow$}\\
@@ -262,7 +265,7 @@ Since our dataset is private and specifically designed for analyzing the deforma
 \begin{table*}[htbp]
 \centering
 \scriptsize
-\caption{Comparisons with state-of-the-art models on BraTS 2020 validation cases.The results are calculated through the online evaluation platform, CBICA-IPP. The average of Dice are computed and used for ranking our methods.(\textbf{Bold} indicates the best.)}
+\caption{Comparisons with state-of-the-art models on BraTS 2020 validation cases. The results are calculated through the online evaluation platform, CBICA-IPP. The average of Dice are computed and used for ranking our methods.(\textbf{Bold} indicates the best \DIFaddbeginFL \DIFaddFL{results}\DIFaddendFL .)}
 \begin{tabular}{lcccccccccccccc}
 \toprule
 \multirow{2}{*}{Dataset} & \multirow{2}{*}{Model}& \multirow{2}{*}{Venue} & \multicolumn{4}{c}{Dice(\%)} & \multicolumn{4}{c}{Hausdorff95($mm$)} \\ 
@@ -289,10 +292,10 @@ Table~\ref{tab:sota} show detailed comparison results for Dice and Hausdorff95 e
 In the BraTS2020 dataset, only TransBTS demonstrates superior performance in HD95 of the tumor core (TC) region compared to our model, which can be attributed to its innovative integration of 3D CNN architecture for extracting local contextual information from three-dimensional spatial features. Regarding the Dice Similarity Coefficient (DSC) in the whole tumor (WT) region, ACTransU-Net marginally outperforms our approach through its implementation of the omni-dimensional dynamic convolution (ODConv) module that adaptively adjusts convolution kernel parameters based on input characteristics, thereby enhancing local tumor boundary delineation. Nevertheless, our model achieves state-of-the-art performance across comprehensive evaluation metrics, demonstrating its exceptional capability in hierarchical feature learning and global context integration. The comparative analysis suggests that while specialized architectures may excel in specific sub-region segmentation tasks through targeted module design, our framework maintains superior generalizability through optimized multi-scale feature representation and cross-modality information fusion.
 
 \subsection{Visualization Results}
-To demonstrate the enhanced performance of the SFM-Unet in the analysis of the sclera in the posterior part of the eye, we have visualized and compared one slice from the same case. The results are presented in Fig~\ref{fig:3}. It is evident that UNet exhibits significant errors in certain regions, which are highlighted in red in the figure. Furthermore, a comparison with Res-UNet reveals that in the region delineated by the yellow circle, the output of SFM-Unet is more closely aligned with the actual labeling (ground truth). This visual comparison provides compelling evidence of the efficacy of SFM-Unet in the mechanical analysis of the sclera at the posterior aspect of the eye. This visual representation allows for a more nuanced understanding of the advantages of SFM-Unet in processing complex biomedical images.
+To demonstrate the enhanced performance of the SFM-Unet in the analysis of the sclera in the posterior part of the eye, we have visualized and compared one slice from the same case. The results are presented in Fig~\ref{fig:3}. It is evident that UNet exhibits significant errors in certain regions, which are highlighted in red \DIFdelbegin \DIFdel{in the figure}\DIFdelend \DIFaddbegin \DIFadd{for visual comparison}\DIFaddend . Furthermore, a comparison with Res-UNet reveals that in the region delineated by the yellow circle, the output of SFM-Unet is more closely aligned with the actual labeling (ground truth). This visual comparison provides compelling evidence of the efficacy of SFM-Unet in the mechanical analysis of the sclera at the posterior aspect of the eye. This visual representation allows for a more nuanced understanding of the advantages of SFM-Unet in processing complex biomedical images.
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.9\linewidth]{Fig/fig3.png}}
-\caption{Comparison of SFM-Unet and baseline models on posterior scleral OCT images.}
+\caption{Comparison of SFM-Unet and baseline models on posterior scleral OCT images. \DIFaddbeginFL \DIFaddFL{(Yellow highlight regions of key interest, while red indicate areas with significant errors.)}\DIFaddendFL }
 \label{fig:3}
 \end{figure}
 
